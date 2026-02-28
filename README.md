@@ -1,12 +1,14 @@
 # Quantum Bunker
 
-### When Shor breaks ECDSA, your L2 bridge funds are naked. This is the exit door.
+### Post-Quantum Emergency Withdrawal for Ethereum L2 Bridges
+
+> When Shor breaks ECDSA, your L2 bridge funds are naked. This is the exit door.
 
 ---
 
 **~290 lines of Solidity. Zero elliptic-curve crypto. One primitive: `keccak256`.**
 
-Quantum Bunker is a post-quantum emergency withdrawal contract for L2 bridges. It lets users recover their funds when ECDSA is broken, using only hash-based authentication that quantum computers cannot crack.
+Quantum Bunker is a post-quantum emergency withdrawal smart contract for Ethereum L2 bridges. Deployed on Ethereum L1, it lets users recover their bridged assets (ETH, ERC-20) when ECDSA is broken, using only hash-based authentication that quantum computers cannot crack.
 
 No signatures. No pairings. No BLS. Just hashes.
 
@@ -14,9 +16,9 @@ No signatures. No pairings. No BLS. Just hashes.
 
 ## The Problem
 
-L2 bridges (Base, Optimism, Arbitrum) hold **billions** in locked funds. Every withdrawal relies on ECDSA signatures. The day a quantum computer runs Shor's algorithm, every private key becomes public. Bridge funds drain in minutes.
+Ethereum L2 bridges (Base, Optimism, Arbitrum) hold **billions** in locked funds on L1. Every withdrawal relies on ECDSA signatures. The day a quantum computer runs Shor's algorithm, every Ethereum private key becomes public. Bridge funds drain in minutes.
 
-The Ethereum Foundation [formed a Post-Quantum team](https://www.theblock.co/post/386938/ethereum-foundation-forms-post-quantum-security-team-adds-1-million-research-prize) in January 2026. NIST [deprecates ECC-256 by 2030](https://csrc.nist.gov/projects/post-quantum-cryptography). The clock is ticking, but no L2 bridge has a deployable escape hatch.
+The Ethereum Foundation [formed a Post-Quantum team](https://www.theblock.co/post/386938/ethereum-foundation-forms-post-quantum-security-team-adds-1-million-research-prize) in January 2026. NIST [deprecates ECC-256 by 2030](https://csrc.nist.gov/projects/post-quantum-cryptography). The clock is ticking, but no Ethereum L2 bridge has a deployable escape hatch.
 
 Until now.
 
@@ -49,7 +51,7 @@ Until now.
 
 **Three keccak256 hash chains.** Each operator (sequencer, DA publisher, guardian) authenticates by revealing chain link preimages. No signatures needed. A universal commit-reveal mechanism prevents mempool frontrunning across all three chains.
 
-**Forced data dissemination.** The watchdog doesn't detect fraud — it forces repeated publication of DA chunks on permanent L1 calldata across multiple days, so anyone can verify off-chain.
+**Forced data dissemination.** The watchdog doesn't detect fraud — it forces repeated publication of DA chunks on permanent Ethereum L1 calldata across multiple days, so anyone can verify off-chain.
 
 **Hash-based withdrawal.** Same cryptographic pattern as [Vitalik's quantum emergency fork proposal](https://ethresear.ch/t/how-to-hard-fork-to-save-most-users-funds-in-a-quantum-emergency/18901). Users prove ownership via `keccak256(preimage)` instead of ECDSA. Funds go to an immutable receiver contract sealed in the Merkle tree — even if an attacker sees your preimage, they can't redirect funds.
 
@@ -59,7 +61,7 @@ Until now.
 
 | Guarantees | Non-Guarantees |
 |---|---|
-| All DA on permanent L1 calldata | Semantic correctness of state diffs |
+| All DA on permanent Ethereum L1 calldata | Semantic correctness of state diffs |
 | 10% unique chunk sample across >=10 epochs | Fraud detection (probabilistic only) |
 | 7-day challenge window | Permissionless watchdog under high basefee |
 | Guardian halt (27 years capacity) | Coverage of any specific chunk |
@@ -71,7 +73,7 @@ This contract is radically honest about what it can and cannot do. Read the [ful
 
 ## Economics
 
-The watchdog's viability depends on chunk size and L1 basefee:
+The watchdog's viability depends on chunk size and Ethereum L1 basefee:
 
 | Chunk Size | Gas (EIP-7623) | Break-even basefee |
 |---|---|---|
@@ -92,7 +94,7 @@ This implements the same hash-based preimage recovery pattern described in:
 - **Ethereum Foundation** — [Post-Quantum team](https://www.theblock.co/post/386938/ethereum-foundation-forms-post-quantum-security-team-adds-1-million-research-prize) led by Thomas Coratger (January 2026)
 - **Justin Drake** — leanVM as cornerstone of PQ strategy (consensus layer); Bunker operates at application layer
 
-Same primitive (`keccak256`), different scope. The EF fork protects L1 assets. The Bunker protects L2->L1 bridge assets. Complementary.
+Same primitive (`keccak256`), different scope. The EF fork protects Ethereum L1 assets. The Bunker protects Ethereum L2->L1 bridge assets. Complementary.
 
 ---
 
