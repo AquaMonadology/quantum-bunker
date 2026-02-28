@@ -6,7 +6,7 @@
 
 ---
 
-**~290 lines of Solidity. Zero elliptic-curve crypto. One primitive: `keccak256`.**
+**~340 lines of Solidity. Zero elliptic-curve crypto. One primitive: `keccak256`.**
 
 Quantum Bunker is a post-quantum emergency withdrawal smart contract for Ethereum L2 bridges. Deployed on Ethereum L1, it lets users recover their bridged assets (ETH, ERC-20) when ECDSA is broken, using only hash-based authentication that quantum computers cannot crack.
 
@@ -102,7 +102,7 @@ Same primitive (`keccak256`), different scope. The EF fork protects Ethereum L1 
 
 ```
 ├── src/
-│   └── QuantumBunker.sol       # The contract (~290 lines)
+│   └── QuantumBunker.sol       # The contract (~340 lines)
 ├── test/
 │   └── QuantumBunker.t.sol     # Foundry test suite
 ├── script/
